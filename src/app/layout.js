@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Motors DFS - Talleres",
+  title: "Full-Motors",
   description:
     "Sistema para digitalizar entradas de vehículos a talleres mecánicos.",
 };

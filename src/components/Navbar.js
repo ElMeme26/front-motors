@@ -37,7 +37,7 @@ export default function Navbar() {
     <header className="border-b bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between py-4 px-4">
         <Link href="/" className="text-xl font-bold text-teal-700">
-          Motors DFS
+          Full-Motors
         </Link>
         <nav className="flex items-center gap-2">
           <NavLink href="/">Inicio</NavLink>

@@ -8,7 +8,7 @@ export default function AppShell({ children }) {
         {children}
       </main>
       <footer className="border-t bg-slate-900 text-slate-100 text-center py-4 mt-auto text-sm">
-        <p>&copy; 2026 Motors DFS · Gestión de ingresos vehiculares.</p>
+        <p>&copy; 2026 Full-Motors · Todos los derechos reservados</p>
       </footer>
     </div>
   );
