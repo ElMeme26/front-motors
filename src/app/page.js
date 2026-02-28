@@ -10,14 +10,13 @@ export default function HomePage() {
           Gestión de ingresos vehiculares
         </h1>
         <p className="text-lg text-slate-700">
-          Digitaliza las entradas de vehículos a tu taller mecánico y olvídate
-          del papeleo.
+          Sistema de gestión de ingresos vehiculares a talleres.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <Card title="Entradas de vehículos">
-          <p>Consulta y filtra los vehículos actualmente en el taller.</p>
+          <p>Consulta los vehículos actualmente en el taller.</p>
           <Link href="/vehiculos">
             <Button>Ver vehículos</Button>
           </Link>
@@ -26,17 +25,14 @@ export default function HomePage() {
         <Card title="Administración y NHTSA">
           <p>
             Accede como administrador para crear nuevas entradas y usar la API
-            de NHTSA para decodificar VIN.
+            de NHTSA.
           </p>
           <div className="flex gap-2 mt-2 flex-wrap">
-            <Link href="/login">
-              <Button variant="secondary">Login</Button>
-            </Link>
             <Link href="/vehiculos/nuevo">
               <Button>Nuevo ingreso</Button>
             </Link>
             <Link href="/vin">
-              <Button variant="secondary">Decodificar VIN</Button>
+              <Button variant="secondary">NHTSA</Button>
             </Link>
           </div>
         </Card>

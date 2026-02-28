@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { API } from '@/config';
 import StatusBox from '@/components/StatusBox';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
 export default function VinPage() {
+  const router = useRouter();
   const [vin, setVin] = useState('');
   const [modelyear, setModelyear] = useState('');
   const [marca, setMarca] = useState('');
@@ -113,7 +115,7 @@ export default function VinPage() {
         </form>
 
         {vinResult && (
-          <div className="mt-3 border rounded-lg p-3 bg-white">
+          <div className="mt-3 border rounded-lg p-3 bg-white space-y-1">
             <p>
               <strong>Marca:</strong> {vinResult.Make || 'N/D'}
             </p>
@@ -126,6 +128,21 @@ export default function VinPage() {
             <p className="text-sm text-slate-600 mt-2">
               (Estos datos vienen de la API pública de NHTSA vPIC.)
             </p>
+            <div className="pt-2">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => {
+                  const params = new URLSearchParams();
+                  if (vinResult.Make) params.set('marca', vinResult.Make);
+                  if (vinResult.Model) params.set('modelo', vinResult.Model);
+                  if (vinResult.ModelYear) params.set('anio', vinResult.ModelYear);
+                  router.push(`/vehiculos/nuevo?${params.toString()}`);
+                }}
+              >
+                Usar datos para nueva entrada
+              </Button>
+            </div>
           </div>
         )}
       </section>
@@ -146,7 +163,8 @@ export default function VinPage() {
         {modelos.length > 0 && (
           <div className="mt-3">
             <p className="mb-2 text-slate-700">
-              Modelos encontrados para {marca}:
+              {modelos.length} modelos encontrados para {marca} (mostrando
+              primeros 20):
             </p>
             <ul className="list-disc ml-5 text-sm">
               {modelos.slice(0, 20).map((m) => (

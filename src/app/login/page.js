@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { API } from '@/config';
-import { getToken, setToken } from '@/lib/auth';
+import { getToken, setToken, setUser } from '@/lib/auth';
+import { apiFetch } from '@/lib/api';
 import StatusBox from '@/components/StatusBox';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -49,9 +50,27 @@ export default function LoginPage() {
         setError(data.error || 'Credenciales incorrectas');
         return;
       }
+
       setToken(data.token);
-      setSuccess('Login correcto');
-      router.replace('/vehiculos');
+
+      try {
+        const priv = await apiFetch('/privado');
+        if (priv?.user) {
+          setUser(priv.user);
+          if (priv.user.role === 'admin') {
+            setSuccess('Bienvenido, administrador');
+            router.replace('/vehiculos/nuevo');
+          } else {
+            setSuccess('Inicio de sesión correcto');
+            router.replace('/vehiculos');
+          }
+          return;
+        }
+      } catch {
+        setSuccess('Inicio de sesión correcto');
+        router.replace('/vehiculos');
+        return;
+      }
     } catch (err) {
       setError('Error de red / API no disponible');
     } finally {
@@ -61,7 +80,7 @@ export default function LoginPage() {
 
   return (
     <main className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
+      <h1 className="text-2xl font-bold mb-2">Iniciar sesión</h1>
       <form onSubmit={login} className="space-y-3">
         <Input
           value={email}
@@ -70,7 +89,7 @@ export default function LoginPage() {
         />
         <Input
           value={password}
-          placeholder="Password"
+          placeholder="Contraseña"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
